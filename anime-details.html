@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Détails sur les animés populaires avec synopsis, épisodes et plus.">
+    <meta name="keywords" content="anime, détails, Naruto, One Piece, Attack on Titan, Demon Slayer">
+    <title>Détails Anime - Site Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #764ba2;
+            animation: fadeIn 2s ease-in;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #764ba2;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #667eea;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .theme-toggle:hover {
+            color: #764ba2;
+        }
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .anime-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .anime-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        .anime-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .anime-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        .anime-info h2 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        .anime-info p {
+            margin-bottom: 15px;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            background: #764ba2;
+        }
+        .favorite-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+        .favorite-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        .favorite-btn.favorited {
+            color: #ff6b6b;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .anime-details {
+                flex-direction: column;
+            }
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode main {
+            background: rgba(44, 62, 80, 0.95);
+        }
+        body.dark-mode footer {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode .anime-info h2 {
+            color: #3498db;
+        }
+        body.dark-mode .anime-info p {
+            color: #bdc3c7;
+        }
+        body.dark-mode nav a {
+            color: #3498db;
+        }
+        body.dark-mode nav a:hover {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌟 Site Anime 🌟</h1>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="#populaires">Populaires</a>
+            <a href="#recommandations">Recommandations</a>
+            <a href="contact.html">Contact</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="favorites.html">Favoris</a>
+            <a href="top10.html">Top 10</a>
+        </nav>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-btn">← Retour à l'accueil</a>
+        <div class="anime-details" id="animeDetails">
+            <!-- Anime details will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Site Anime. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Anime data
+        const animeData = {
+            "Naruto": {
+                title: "Naruto",
+                image: "image/1730618049_Demon Slayer 2024 (21).jpeg",
+                synopsis: "Naruto Uzumaki, un jeune ninja turbulent, rêve de devenir le plus grand ninja de son village. Malgré les difficultés, il poursuit son objectif avec détermination et amitié.",
+                episodes: 220,
+                rating: 8.3,
+                genre: "Action, Aventure, Shonen"
+            },
+            "One Piece": {
+                title: "One Piece",
+                image: "image/1740654033_c2a53e4c60fac8fa82ec0a8d3d03540b.jpg",
+                synopsis: "Monkey D. Luffy et son équipage partent à la recherche du trésor ultime, le One Piece, dans une aventure épique pleine de combats et d'amitié.",
+                episodes: "1000+",
+                rating: 9.0,
+                genre: "Action, Aventure, Comédie"
+            },
+            "Attack on Titan": {
+                title: "Attack on Titan",
+                image: "image/1730601135_AOT  (13).jpg",
+                synopsis: "Dans un monde où l'humanité est menacée par des géants mangeurs d'hommes, Eren Jaeger découvre la vérité sur les Titans et se bat pour la liberté.",
+                episodes: 87,
+                rating: 9.0,
+                genre: "Action, Drame, Fantastique"
+            },
+            "Demon Slayer": {
+                title: "Demon Slayer",
+                image: "image/1730615319_Anime 2024 (115).jpeg",
+                synopsis: "Tanjiro Kamado devient un chasseur de démons pour venger sa famille et sauver sa sœur transformée en démon.",
+                episodes: 44,
+                rating: 8.7,
+                genre: "Action, Supernatural, Shonen"
+            },
+            "My Hero Academia": {
+                title: "My Hero Academia",
+                image: "image/1668645159_4(1).jpg",
+                synopsis: "Dans un monde où 80% de la population a des super-pouvoirs, Izuku Midoriya rêve de devenir un héros malgré son absence de pouvoir.",
+                episodes: 113,
+                rating: 8.4,
+                genre: "Action, Super-héros, Shonen"
+            },
+            "Death Note": {
+                title: "Death Note",
+                image: "image/1626145649_Death Note (5).jpg",
+                synopsis: "Light Yagami trouve un cahier qui lui permet de tuer quiconque dont il écrit le nom. Il décide d'utiliser ce pouvoir pour créer un monde parfait.",
+                episodes: 37,
+                rating: 9.0,
+                genre: "Thriller, Psychologique, Supernatural"
+            },
+            "Fullmetal Alchemist": {
+                title: "Fullmetal Alchemist",
+                image: "image/1626148511_Full metal Alchemist (5).jpg",
+                synopsis: "Edward et Alphonse Elric tentent de ramener leur mère à la vie grâce à l'alchimie, mais paient un prix terrible pour leur transgression.",
+                episodes: 64,
+                rating: 9.1,
+                genre: "Action, Aventure, Fantastique"
+            },
+            "Tokyo Ghoul": {
+                title: "Tokyo Ghoul",
+                image: "image/1668050420_Tokyo Ghoul  (20).jpg",
+                synopsis: "Ken Kaneki devient un ghoul après une transplantation d'organes et doit naviguer entre le monde des humains et celui des goules.",
+                episodes: 48,
+                rating: 7.8,
+                genre: "Action, Horreur, Supernatural"
+            }
+        };
+
+        // Get anime name from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const animeName = urlParams.get('anime');
+
+        if (animeName && animeData[animeName]) {
+            const anime = animeData[animeName];
+            document.getElementById('animeDetails').innerHTML = `
+                <div class="anime-image">
+                    <img src="${anime.image}" alt="${anime.title}">
+                </div>
+                <div class="anime-info">
+                    <h2>${anime.title} <button class="favorite-btn" data-anime="${anime.title}" onclick="toggleFavorite(this.getAttribute('data-anime'))"><i class="far fa-heart"></i></button></h2>
+                    <p><strong>Synopsis:</strong> ${anime.synopsis}</p>
+                    <p><strong>Épisodes:</strong> ${anime.episodes}</p>
+                    <p><strong>Note:</strong> ${anime.rating}/10</p>
+                    <p><strong>Genre:</strong> ${anime.genre}</p>
+                </div>
+            `;
+        } else {
+            document.getElementById('animeDetails').innerHTML = '<p>Anime non trouvé.</p>';
+        }
+
+        // Favorites functionality
+        function toggleFavorite(animeName) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const index = favorites.indexOf(animeName);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(animeName);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoriteButtons();
+        }
+
+        function updateFavoriteButtons() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const animeName = btn.getAttribute('data-anime');
+                if (favorites.includes(animeName)) {
+                    btn.classList.add('favorited');
+                    btn.innerHTML = '<i class="fas fa-heart"></i>';
+                } else {
+                    btn.classList.remove('favorited');
+                    btn.innerHTML = '<i class="far fa-heart"></i>';
+                }
+            });
+        }
+
+        // Initialize favorite buttons on page load
+        document.addEventListener('DOMContentLoaded', updateFavoriteButtons);
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contactez-nous pour des suggestions ou des questions sur les animés.">
+    <meta name="keywords" content="contact, anime, suggestions, questions">
+    <title>Contact - Site Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #764ba2;
+            animation: fadeIn 2s ease-in;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #764ba2;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-form label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #764ba2;
+        }
+        .contact-form button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .contact-form button:hover {
+            background: #764ba2;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            main {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #667eea;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .theme-toggle:hover {
+            color: #764ba2;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode main {
+            background: rgba(44, 62, 80, 0.95);
+        }
+        body.dark-mode footer {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode .contact-form input,
+        body.dark-mode .contact-form textarea {
+            border-color: #3498db;
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        body.dark-mode .contact-form input:focus,
+        body.dark-mode .contact-form textarea:focus {
+            border-color: #2980b9;
+        }
+        body.dark-mode .contact-form button {
+            background: #3498db;
+        }
+        body.dark-mode .contact-form button:hover {
+            background: #2980b9;
+        }
+        body.dark-mode nav a {
+            color: #3498db;
+        }
+        body.dark-mode nav a:hover {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌟 Site Anime 🌟</h1>
+        <button id="themeToggle" class="theme-toggle" aria-label="Basculer le mode sombre"><i class="fas fa-moon"></i></button>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="index.html#populaires">Populaires</a>
+            <a href="index.html#recommandations">Recommandations</a>
+            <a href="contact.html">Contact</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="favorites.html">Favoris</a>
+            <a href="top10.html">Top 10</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Contactez-nous</h2>
+        <p>Vous avez des suggestions, des questions ou des commentaires sur notre site ? N'hésitez pas à nous contacter !</p>
+        <form class="contact-form" id="contactForm">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Site Anime. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Simple validation
+            if (!name || !email || !message) {
+                alert('Veuillez remplir tous les champs.');
+                return;
+            }
+
+            // Simulate form submission (in a real app, this would send to a server)
+            alert(`Merci ${name} ! Votre message a été envoyé. Nous vous répondrons bientôt à ${email}.`);
+
+            // Clear form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

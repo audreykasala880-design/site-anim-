@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les meilleurs animés avec des recommandations, populaires et une recherche facile.">
+    <meta name="keywords" content="anime, animés, Naruto, One Piece, Attack on Titan, Demon Slayer">
+    <title>Site Anime - Découvrez les Meilleurs Animés</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #764ba2;
+            animation: fadeIn 2s ease-in;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #764ba2;
+        }
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #764ba2;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            animation: slideIn 1s ease-out;
+        }
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .anime-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background 0.3s;
+        }
+        .favorite-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        .favorite-btn.favorited {
+            color: #ff6b6b;
+        }
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .anime-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .anime-card:hover img {
+            transform: scale(1.1);
+        }
+        .anime-card h3 {
+            padding: 15px;
+            margin: 0;
+            color: #333;
+        }
+        .anime-card p {
+            padding: 0 15px 15px;
+            margin: 0;
+            color: #666;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search-bar input:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+        }
+        .search-bar select {
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-left: 10px;
+        }
+        .search-bar select:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+        .search-bar button:hover {
+            background: #764ba2;
+        }
+        .random-anime-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .random-anime-btn:hover {
+            background: #ff5252;
+        }
+        .anime-card.highlighted {
+            animation: highlight 2s ease-in-out;
+        }
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .anime-grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .search-bar input {
+                width: 80%;
+            }
+        }
+        .no-results {
+            text-align: center;
+            color: #764ba2;
+            font-size: 1.2em;
+            display: none;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #667eea;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .theme-toggle:hover {
+            color: #764ba2;
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode main {
+            background: rgba(44, 62, 80, 0.95);
+        }
+        body.dark-mode footer {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode .anime-card {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        body.dark-mode .anime-card h3 {
+            color: #ecf0f1;
+        }
+        body.dark-mode .anime-card p {
+            color: #bdc3c7;
+        }
+        body.dark-mode nav a {
+            color: #3498db;
+        }
+        body.dark-mode nav a:hover {
+            color: #2980b9;
+        }
+        body.dark-mode .section h2 {
+            color: #3498db;
+        }
+        body.dark-mode .search-bar input {
+            border-color: #3498db;
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        body.dark-mode .search-bar input:focus {
+            border-color: #2980b9;
+        }
+        body.dark-mode .search-bar button {
+            background: #3498db;
+        }
+        body.dark-mode .search-bar button:hover {
+            background: #2980b9;
+        }
+        body.dark-mode .no-results {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌟 Site Anime 🌟</h1>
+        <button id="themeToggle" class="theme-toggle" aria-label="Basculer le mode sombre"><i class="fas fa-moon"></i></button>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="#populaires">Populaires</a>
+            <a href="#recommandations">Recommandations</a>
+            <a href="contact.html">Contact</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="favorites.html">Favoris</a>
+            <a href="top10.html">Top 10</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="accueil" class="section">
+            <h2>Bienvenue sur Site Anime</h2>
+            <p>Découvrez les meilleurs animés du monde ! Plongez dans des histoires captivantes, des personnages mémorables et des mondes fantastiques.</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Rechercher un anime...">
+                <select id="genreSelect">
+                    <option value="">Tous les genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Aventure">Aventure</option>
+                    <option value="Comédie">Comédie</option>
+                    <option value="Drame">Drame</option>
+                    <option value="Fantastique">Fantastique</option>
+                    <option value="Shonen">Shonen</option>
+                    <option value="Super-héros">Super-héros</option>
+                    <option value="Supernatural">Supernatural</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Psychologique">Psychologique</option>
+                    <option value="Horreur">Horreur</option>
+                </select>
+                <button onclick="searchAnime()">Rechercher</button>
+                <button class="random-anime-btn" onclick="randomAnime()">Anime Aléatoire</button>
+            </div>
+            <p id="noResults" class="no-results">Aucun anime trouvé pour votre recherche.</p>
+        </section>
+
+        <section id="populaires" class="section">
+            <h2>Animés Populaires</h2>
+            <div class="anime-grid" id="popularAnime">
+                <article class="anime-card" data-genre="Action,Aventure,Shonen" onclick="window.location.href='anime-details.html?anime=Naruto'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Naruto')"><i class="far fa-heart"></i></button>
+                    <img src="image/1730618049_Demon Slayer 2024 (21).jpeg" alt="Naruto">
+                    <h3>Naruto</h3>
+                    <p>Un ninja déterminé dans sa quête pour devenir Hokage.</p>
+                </article>
+                <article class="anime-card" data-genre="Action,Aventure,Comédie" onclick="window.location.href='anime-details.html?anime=One%20Piece'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('One Piece')"><i class="far fa-heart"></i></button>
+                    <img src="image/1740654033_c2a53e4c60fac8fa82ec0a8d3d03540b.jpg" alt="One Piece">
+                    <h3>One Piece</h3>
+                    <p>L'aventure épique de Luffy et son équipage à la recherche du trésor ultime.</p>
+                </article>
+                <article class="anime-card" data-genre="Action,Drame,Fantastique" onclick="window.location.href='anime-details.html?anime=Attack%20on%20Titan'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Attack on Titan')"><i class="far fa-heart"></i></button>
+                    <img src="image/1730601135_AOT  (13).jpg" alt="Attack on Titan">
+                    <h3>Attack on Titan</h3>
+                    <p>Une lutte désespérée contre des géants mangeurs d'hommes.</p>
+                </article>
+                <article class="anime-card" data-genre="Action,Supernatural,Shonen" onclick="window.location.href='anime-details.html?anime=Demon%20Slayer'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Demon Slayer')"><i class="far fa-heart"></i></button>
+                    <img src="image/1730615319_Anime 2024 (115).jpeg" alt="Demon Slayer">
+                    <h3>Demon Slayer</h3>
+                    <p>Un jeune garçon combat des démons pour sauver sa sœur.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="recommandations" class="section">
+            <h2>Nos Recommandations</h2>
+            <div class="anime-grid" id="recommendedAnime">
+                <article class="anime-card" data-genre="Super-héros,Action,Shonen" onclick="window.location.href='anime-details.html?anime=My%20Hero%20Academia'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('My Hero Academia')"><i class="far fa-heart"></i></button>
+                    <img src="image/1668645159_4(1).jpg" alt="My Hero Academia">
+                    <h3>My Hero Academia</h3>
+                    <p>Un monde où tout le monde a des super-pouvoirs.</p>
+                </article>
+                <article class="anime-card" data-genre="Psychologique,Thriller,Supernatural" onclick="window.location.href='anime-details.html?anime=Death%20Note'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Death Note')"><i class="far fa-heart"></i></button>
+                    <img src="image/1626145649_Death Note (5).jpg" alt="Death Note">
+                    <h3>Death Note</h3>
+                    <p>Un cahier qui permet de tuer quiconque dont on écrit le nom.</p>
+                </article>
+                <article class="anime-card" data-genre="Fantastique,Aventure,Drame" onclick="window.location.href='anime-details.html?anime=Fullmetal%20Alchemist'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Fullmetal Alchemist')"><i class="far fa-heart"></i></button>
+                    <img src="image/1626148511_Full metal Alchemist (5).jpg" alt="Fullmetal Alchemist">
+                    <h3>Fullmetal Alchemist</h3>
+                    <p>Deux frères alchimistes en quête de la pierre philosophale.</p>
+                </article>
+                <article class="anime-card" data-genre="Horreur,Supernatural,Action" onclick="window.location.href='anime-details.html?anime=Tokyo%20Ghoul'">
+                    <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('Tokyo Ghoul')"><i class="far fa-heart"></i></button>
+                    <img src="image/1668050420_Tokyo Ghoul  (20).jpg" alt="Tokyo Ghoul">
+                    <h3>Tokyo Ghoul</h3>
+                    <p>Un étudiant ordinaire devient un ghoul après une transplantation.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Contactez-nous</h2>
+            <p>Vous avez des suggestions ou des questions ? N'hésitez pas à nous contacter !</p>
+            <p>Email : contact@siteanime.com</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Site Anime. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function searchAnime() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const selectedGenre = document.getElementById('genreSelect').value;
+            const cards = document.querySelectorAll('.anime-card');
+            let hasResults = false;
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                const genres = card.getAttribute('data-genre') || '';
+                const matchesQuery = title.includes(query) || description.includes(query);
+                const matchesGenre = selectedGenre === '' || genres.split(',').includes(selectedGenre);
+                if (matchesQuery && matchesGenre) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            const noResults = document.getElementById('noResults');
+            noResults.style.display = hasResults ? 'none' : 'block';
+        }
+
+        function randomAnime() {
+            const cards = document.querySelectorAll('.anime-card');
+            if (cards.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * cards.length);
+            const randomCard = cards[randomIndex];
+            randomCard.classList.add('highlighted');
+            setTimeout(() => {
+                randomCard.classList.remove('highlighted');
+            }, 2000);
+            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        document.querySelectorAll('.section h2').forEach(h2 => {
+            h2.style.animationPlayState = 'paused';
+            observer.observe(h2);
+        });
+
+        // Add some fun hover effects
+        document.querySelectorAll('.anime-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Auto-search on input
+        document.getElementById('searchInput').addEventListener('input', searchAnime);
+
+        // Auto-search on genre select
+        document.getElementById('genreSelect').addEventListener('change', searchAnime);
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // Favorites functionality
+        function toggleFavorite(animeName) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const index = favorites.indexOf(animeName);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(animeName);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoriteButtons();
+        }
+
+        function updateFavoriteButtons() {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const animeName = btn.onclick.toString().match(/'([^']+)'/)[1];
+                if (favorites.includes(animeName)) {
+                    btn.classList.add('favorited');
+                    btn.innerHTML = '<i class="fas fa-heart"></i>';
+                } else {
+                    btn.classList.remove('favorited');
+                    btn.innerHTML = '<i class="far fa-heart"></i>';
+                }
+            });
+        }
+
+        // Initialize favorite buttons on page load
+        document.addEventListener('DOMContentLoaded', updateFavoriteButtons);
+    </script>
+</body>
+</html>

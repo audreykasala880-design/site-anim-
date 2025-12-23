@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Testez vos connaissances sur les animés avec notre quiz interactif.">
+    <meta name="keywords" content="anime, quiz, Naruto, One Piece, Attack on Titan, Demon Slayer">
+    <title>Quiz Anime - Site Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #764ba2;
+            animation: fadeIn 2s ease-in;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #764ba2;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-container {
+            text-align: center;
+        }
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #764ba2;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option {
+            padding: 15px;
+            background: #f9f9f9;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .option:hover {
+            background: #667eea;
+            color: white;
+        }
+        .option.correct {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+        .option.incorrect {
+            background: #f44336;
+            border-color: #f44336;
+            color: white;
+        }
+        .score {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .next-btn, .restart-btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px;
+        }
+        .next-btn:hover, .restart-btn:hover {
+            background: #764ba2;
+        }
+        .results {
+            text-align: center;
+        }
+        .results h2 {
+            color: #764ba2;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode main {
+            background: rgba(44, 62, 80, 0.95);
+        }
+        body.dark-mode footer {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode .question {
+            color: #3498db;
+        }
+        body.dark-mode .option {
+            background: #34495e;
+            border-color: #3498db;
+            color: #ecf0f1;
+        }
+        body.dark-mode .option:hover {
+            background: #3498db;
+        }
+        body.dark-mode nav a {
+            color: #3498db;
+        }
+        body.dark-mode nav a:hover {
+            color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            main {
+                margin: 10px;
+                padding: 15px;
+            }
+            .question {
+                font-size: 1.2em;
+            }
+            .option {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌟 Site Anime 🌟</h1>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="#populaires">Populaires</a>
+            <a href="#recommandations">Recommandations</a>
+            <a href="contact.html">Contact</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="favorites.html">Favoris</a>
+            <a href="top10.html">Top 10</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="quiz-container">
+            <div id="quiz">
+                <div class="score">Score: <span id="score">0</span>/<span id="total">0</span></div>
+                <div id="question-container">
+                    <div class="question" id="question"></div>
+                    <div class="options" id="options"></div>
+                </div>
+                <button id="next-btn" class="next-btn" style="display: none;">Question Suivante</button>
+            </div>
+            <div id="results" class="results" style="display: none;">
+                <h2>Quiz Terminé !</h2>
+                <p>Votre score final : <span id="final-score"></span></p>
+                <button class="restart-btn" onclick="restartQuiz()">Recommencer le Quiz</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Site Anime. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "Quel est le nom du village caché dans Naruto ?",
+                options: ["Konoha", "Suna", "Kiri", "Iwa"],
+                correct: 0
+            },
+            {
+                question: "Quel est le trésor que recherche Luffy dans One Piece ?",
+                options: ["Le One Piece", "Le trésor de Gol D. Roger", "Les fruits du démon", "Le chapeau de paille"],
+                correct: 0
+            },
+            {
+                question: "Dans Attack on Titan, que sont les Titans ?",
+                options: ["Des géants mangeurs d'hommes", "Des robots géants", "Des animaux mutants", "Des aliens"],
+                correct: 0
+            },
+            {
+                question: "Quel est le nom du frère aîné dans Fullmetal Alchemist ?",
+                options: ["Edward", "Alphonse", "Roy", "Winry"],
+                correct: 0
+            },
+            {
+                question: "Dans Death Note, quel est le pouvoir du cahier ?",
+                options: ["Tuer quiconque dont on écrit le nom", "Contrôler les esprits", "Voir l'avenir", "Téléportation"],
+                correct: 0
+            },
+            {
+                question: "Quel est le super-pouvoir d'Izuku Midoriya dans My Hero Academia ?",
+                options: ["One For All", "All For One", "Super Force", "Télékinésie"],
+                correct: 0
+            },
+            {
+                question: "Dans Demon Slayer, quel est le nom de la sœur de Tanjiro ?",
+                options: ["Nezuko", "Kanao", "Daki", "Tamayo"],
+                correct: 0
+            },
+            {
+                question: "Dans Tokyo Ghoul, que deviennent les goules après une transplantation ?",
+                options: ["Des hybrides humain-goule", "Des vampires", "Des zombies", "Des mutants"],
+                correct: 0
+            },
+            {
+                question: "Quel est le surnom de Naruto Uzumaki ?",
+                options: ["Le ninja fou", "Le démon renard à neuf queues", "Le héros de Konoha", "Le roi des ninjas"],
+                correct: 1
+            },
+            {
+                question: "Quel est le nom du navire de Monkey D. Luffy dans One Piece ?",
+                options: ["Le Thousand Sunny", "Le Going Merry", "Le Red Force", "Le Oro Jackson"],
+                correct: 0
+            },
+            {
+                question: "Dans Attack on Titan, quel est le vrai nom d'Eren Jaeger ?",
+                options: ["Eren Kruger", "Eren Yeager", "Eren Smith", "Eren Ackerman"],
+                correct: 1
+            },
+            {
+                question: "Quel est le nom du frère cadet dans Fullmetal Alchemist ?",
+                options: ["Edward", "Alphonse", "Roy", "Maes"],
+                correct: 1
+            },
+            {
+                question: "Dans Death Note, qui est le détenteur initial du cahier ?",
+                options: ["Light Yagami", "Ryuk", "L", "Misa"],
+                correct: 1
+            },
+            {
+                question: "Quel est le nom de l'école dans My Hero Academia ?",
+                options: ["U.A. High School", "Shonen Academy", "Hero Academy", "Super School"],
+                correct: 0
+            },
+            {
+                question: "Dans Demon Slayer, quel est le rang de Tanjiro au début ?",
+                options: ["Pillard de démon", "Chasseur de démon", "Tueur de démon", "Gardien de démon"],
+                correct: 0
+            },
+            {
+                question: "Quel anime met en scène des personnages avec des quirks ?",
+                options: ["My Hero Academia", "One Piece", "Naruto", "Attack on Titan"],
+                correct: 0
+            },
+            {
+                question: "Dans Tokyo Ghoul, quel est le nom de l'organisation anti-goule ?",
+                options: ["CCG", "Aogiri Tree", "V", "Clowns"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.question;
+            document.getElementById('total').textContent = questions.length;
+
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectOption(optionElement, index);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            document.getElementById('next-btn').style.display = 'none';
+            selectedOption = null;
+        }
+
+        function selectOption(element, index) {
+            if (selectedOption !== null) return;
+
+            selectedOption = index;
+            const question = questions[currentQuestionIndex];
+
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                if (i === question.correct) {
+                    opt.classList.add('correct');
+                } else if (i === index && i !== question.correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            if (index === question.correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+            }
+
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('score').textContent = score;
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            loadQuestion();
+        }
+
+        document.getElementById('next-btn').onclick = nextQuestion;
+
+        // Dark mode toggle (same as index.html)
+        const body = document.body;
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+        }
+
+        // Load first question
+        loadQuestion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Créez votre propre Top 10 des animés avec un système de vote interactif.">
+    <meta name="keywords" content="anime, top 10, classement, Naruto, One Piece, Attack on Titan, Demon Slayer">
+    <title>Top 10 - Site Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #764ba2;
+            animation: fadeIn 2s ease-in;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #764ba2;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #667eea;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .theme-toggle:hover {
+            color: #764ba2;
+        }
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .top10-section {
+            text-align: center;
+        }
+        .top10-section h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: move;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .ranking-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .ranking-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #764ba2;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+        .ranking-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .ranking-content img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        .ranking-content h3 {
+            margin: 0;
+            color: #764ba2;
+            font-size: 1.2em;
+        }
+        .vote-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .vote-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .vote-btn:hover {
+            background: #764ba2;
+        }
+        .vote-btn.up {
+            background: #4CAF50;
+        }
+        .vote-btn.down {
+            background: #f44336;
+        }
+        .reset-btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .reset-btn:hover {
+            background: #764ba2;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #666;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+        }
+        body.dark-mode header {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode main {
+            background: rgba(44, 62, 80, 0.95);
+        }
+        body.dark-mode footer {
+            background: rgba(44, 62, 80, 0.9);
+        }
+        body.dark-mode .ranking-item {
+            background: #34495e;
+        }
+        body.dark-mode .ranking-content h3 {
+            color: #3498db;
+        }
+        body.dark-mode nav a {
+            color: #3498db;
+        }
+        body.dark-mode nav a:hover {
+            color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            main {
+                margin: 10px;
+                padding: 15px;
+            }
+            .ranking-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .ranking-content {
+                margin-bottom: 10px;
+            }
+            .vote-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌟 Site Anime 🌟</h1>
+        <button id="themeToggle" class="theme-toggle" aria-label="Basculer le mode sombre"><i class="fas fa-moon"></i></button>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="index.html#populaires">Populaires</a>
+            <a href="index.html#recommandations">Recommandations</a>
+            <a href="contact.html">Contact</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="favorites.html">Favoris</a>
+            <a href="top10.html">Top 10</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="top10-section">
+            <h2>Mon Top 10 des Animés</h2>
+            <div class="ranking-list" id="rankingList">
+                <!-- Ranking items will be populated by JavaScript -->
+            </div>
+            <button class="reset-btn" onclick="resetRanking()">Réinitialiser le Classement</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Site Anime. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Anime data (same as other pages)
+        const animeData = {
+            "Naruto": {
+                title: "Naruto",
+                image: "image/1730618049_Demon Slayer 2024 (21).jpeg",
+                synopsis: "Naruto Uzumaki, un jeune ninja turbulent, rêve de devenir le plus grand ninja de son village. Malgré les difficultés, il poursuit son objectif avec détermination et amitié.",
+                episodes: 220,
+                rating: 8.3,
+                genre: "Action, Aventure, Shonen"
+            },
+            "One Piece": {
+                title: "One Piece",
+                image: "image/1740654033_c2a53e4c60fac8fa82ec0a8d3d03540b.jpg",
+                synopsis: "Monkey D. Luffy et son équipage partent à la recherche du trésor ultime, le One Piece, dans une aventure épique pleine de combats et d'amitié.",
+                episodes: "1000+",
+                rating: 9.0,
+                genre: "Action, Aventure, Comédie"
+            },
+            "Attack on Titan": {
+                title: "Attack on Titan",
+                image: "image/1730601135_AOT  (13).jpg",
+                synopsis: "Dans un monde où l'humanité est menacée par des géants mangeurs d'hommes, Eren Jaeger découvre la vérité sur les Titans et se bat pour la liberté.",
+                episodes: 87,
+                rating: 9.0,
+                genre: "Action, Drame, Fantastique"
+            },
+            "Demon Slayer": {
+                title: "Demon Slayer",
+                image: "image/1730615319_Anime 2024 (115).jpeg",
+                synopsis: "Tanjiro Kamado devient un chasseur de démons pour venger sa famille et sauver sa sœur transformée en démon.",
+                episodes: 44,
+                rating: 8.7,
+                genre: "Action, Supernatural, Shonen"
+            },
+            "My Hero Academia": {
+                title: "My Hero Academia",
+                image: "image/1668645159_4(1).jpg",
+                synopsis: "Dans un monde où 80% de la population a des super-pouvoirs, Izuku Midoriya rêve de devenir un héros malgré son absence de pouvoir.",
+                episodes: 113,
+                rating: 8.4,
+                genre: "Action, Super-héros, Shonen"
+            },
+            "Death Note": {
+                title: "Death Note",
+                image: "image/1626145649_Death Note (5).jpg",
+                synopsis: "Light Yagami trouve un cahier qui lui permet de tuer quiconque dont il écrit le nom. Il décide d'utiliser ce pouvoir pour créer un monde parfait.",
+                episodes: 37,
+                rating: 9.0,
+                genre: "Thriller, Psychologique, Supernatural"
+            },
+            "Fullmetal Alchemist": {
+                title: "Fullmetal Alchemist",
+                image: "image/1626148511_Full metal Alchemist (5).jpg",
+                synopsis: "Edward et Alphonse Elric tentent de ramener leur mère à la vie grâce à l'alchimie, mais paient un prix terrible pour leur transgression.",
+                episodes: 64,
+                rating: 9.1,
+                genre: "Action, Aventure, Fantastique"
+            },
+            "Tokyo Ghoul": {
+                title: "Tokyo Ghoul",
+                image: "image/1668050420_Tokyo Ghoul  (20).jpg",
+                synopsis: "Ken Kaneki devient un ghoul après une transplantation d'organes et doit naviguer entre le monde des humains et celui des goules.",
+                episodes: 48,
+                rating: 7.8,
+                genre: "Action, Horreur, Supernatural"
+            }
+        };
+
+        let ranking = JSON.parse(localStorage.getItem('top10Ranking')) || Object.keys(animeData).slice(0, 10);
+
+        function loadRanking() {
+            const rankingList = document.getElementById('rankingList');
+            rankingList.innerHTML = '';
+
+            ranking.forEach((animeName, index) => {
+                if (animeData[animeName]) {
+                    const anime = animeData[animeName];
+                    const item = document.createElement('div');
+                    item.classList.add('ranking-item');
+                    item.setAttribute('data-anime', animeName);
+                    item.innerHTML = `
+                        <div class="ranking-number">${index + 1}</div>
+                        <div class="ranking-content">
+                            <img src="${anime.image}" alt="${anime.title}">
+                            <h3>${anime.title}</h3>
+                        </div>
+                        <div class="vote-buttons">
+                            <button class="vote-btn up" data-anime="${animeName}" onclick="moveUp(this.getAttribute('data-anime'))"><i class="fas fa-chevron-up"></i></button>
+                            <button class="vote-btn down" data-anime="${animeName}" onclick="moveDown(this.getAttribute('data-anime'))"><i class="fas fa-chevron-down"></i></button>
+                        </div>
+                    `;
+                    rankingList.appendChild(item);
+                }
+            });
+        }
+
+        function moveUp(animeName) {
+            const index = ranking.indexOf(animeName);
+            if (index > 0) {
+                [ranking[index], ranking[index - 1]] = [ranking[index - 1], ranking[index]];
+                saveRanking();
+                loadRanking();
+            }
+        }
+
+        function moveDown(animeName) {
+            const index = ranking.indexOf(animeName);
+            if (index < ranking.length - 1) {
+                [ranking[index], ranking[index + 1]] = [ranking[index + 1], ranking[index]];
+                saveRanking();
+                loadRanking();
+            }
+        }
+
+        function saveRanking() {
+            localStorage.setItem('top10Ranking', JSON.stringify(ranking));
+        }
+
+        function resetRanking() {
+            ranking = Object.keys(animeData).slice(0, 10);
+            saveRanking();
+            loadRanking();
+        }
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // Load ranking on page load
+        document.addEventListener('DOMContentLoaded', loadRanking);
+    </script>
+</body>
+</html>
